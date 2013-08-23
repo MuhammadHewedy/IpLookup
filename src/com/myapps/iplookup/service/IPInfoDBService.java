@@ -1,4 +1,7 @@
-package com.myapps.iplookup;
+package com.myapps.iplookup.service;
+
+import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.StringUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +13,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class IPInfoDBService extends SuperIPService {
+public class IPInfoDBService extends IPService {
 
 	public IPInfoDBService() {
 		this.url = "http://api.ipinfodb.com/v3/ip-country/?key=57dd7876cf42d1c9dc07574764cd29969b8ea3929f3ac38bef0f7fae330acbb9&format=json&ip=";
@@ -20,7 +23,7 @@ public class IPInfoDBService extends SuperIPService {
 
 	public IPInfoDBService(DefaultHttpClient httpclient) {
 		this();
-		this.httpclient = httpclient;
+		this.httpClient = httpclient;
 	}
 
 	@Override
@@ -33,7 +36,7 @@ public class IPInfoDBService extends SuperIPService {
 		BufferedReader in = null;
 		try {
 			int count = 0;
-			entity = getContents(httpclient, new URL(finalURL));
+			entity = getContents(httpClient, new URL(finalURL));
 			ObjectMapper mapper = new ObjectMapper(); // can reuse, share
 														// globally
 			HashMap<String, String> jsonIPDTO = mapper.readValue(

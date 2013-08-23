@@ -1,5 +1,8 @@
 package com.myapps.iplookup;
 
+import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.IpLookupHelper;
+
 import org.apache.http.impl.client.DefaultHttpClient;
 
 /**

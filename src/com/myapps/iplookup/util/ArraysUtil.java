@@ -1,4 +1,4 @@
-package com.myapps.iplookup;
+package com.myapps.iplookup.util;
 
 public class ArraysUtil {
 	public static boolean in(String[] list, String in) {

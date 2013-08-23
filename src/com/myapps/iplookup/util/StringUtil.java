@@ -1,4 +1,4 @@
-package com.myapps.iplookup;
+package com.myapps.iplookup.util;
 
 public class StringUtil {
 	private static String SINGLE_QUOTE = "'";

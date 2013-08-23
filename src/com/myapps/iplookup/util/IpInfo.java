@@ -1,4 +1,4 @@
-package com.myapps.iplookup;
+package com.myapps.iplookup.util;
 
 import java.io.Serializable;
 

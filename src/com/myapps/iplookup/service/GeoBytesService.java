@@ -1,4 +1,6 @@
-package com.myapps.iplookup;
+package com.myapps.iplookup.service;
+
+import com.myapps.iplookup.util.IpInfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class GeoBytesService extends SuperIPService {
+public class GeoBytesService extends IPService {
 
 	public GeoBytesService() {
 		this.url = "http://www.geobytes.com/IpLocator.htm?GetLocation&IpAddress=";
@@ -23,7 +25,7 @@ public class GeoBytesService extends SuperIPService {
 
 	public GeoBytesService(DefaultHttpClient httpclient) {
 		this();
-		this.httpclient = httpclient;
+		this.httpClient = httpclient;
 	}
 
 	private String _finalURL = "";
@@ -41,7 +43,7 @@ public class GeoBytesService extends SuperIPService {
 		BufferedReader in = null;
 
 		try {
-			entity = getContents(httpclient, new URL(finalURL));
+			entity = getContents(httpClient, new URL(finalURL));
 			in = new BufferedReader(new InputStreamReader(entity.getContent()));
 
 			String inputLine = null;

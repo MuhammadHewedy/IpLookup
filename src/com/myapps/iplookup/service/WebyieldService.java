@@ -1,4 +1,7 @@
-package com.myapps.iplookup;
+package com.myapps.iplookup.service;
+
+import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.StringUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +12,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-public class WebyieldService extends SuperIPService {
+public class WebyieldService extends IPService {
 
 	public WebyieldService() {
 		this.url = "http://www.webyield.net/ip/index.php?ip=";
@@ -19,7 +22,7 @@ public class WebyieldService extends SuperIPService {
 
 	public WebyieldService(DefaultHttpClient httpclient) {
 		this();
-		this.httpclient = httpclient;
+		this.httpClient = httpclient;
 	}
 
 	@Override
@@ -33,7 +36,7 @@ public class WebyieldService extends SuperIPService {
 		BufferedReader in = null;
 
 		try {
-			entity = getContents(httpclient, new URL(finalURL));
+			entity = getContents(httpClient, new URL(finalURL));
 			in = new BufferedReader(new InputStreamReader(entity.getContent()));
 
 			String inputLine = null;
