@@ -32,18 +32,16 @@ public class IpLookupHelper {
         superIPLookUpsList.add(new WebyieldService(httpClient));
         superIPLookUpsList.add(new GeoBytesService(httpClient));
         superIPLookUpsList.add(new WhatIsMyIPAddressService(httpClient));
-
         Collections.sort(superIPLookUpsList);
-
         return getIpValue(ipAddress, superIPLookUpsList);
     }
 
     private static IpInfo getIpValue(String ip,
-                                     List<AbstractService> superIPLookUps) {
+                                     List<AbstractService> ipLookUps) {
         IpInfo ipLookup = new IpInfo();
         try {
-            for (int i = 0; i < superIPLookUps.size(); i++) {
-                ipLookup = superIPLookUps.get(i).getIpValue(ip);
+            for (int i = 0; i < ipLookUps.size(); i++) {
+                ipLookup = ipLookUps.get(i).getIpValue(ip);
                 if (StringUtil.isNullSpacesOrEmpty(ipLookup.getErrorMsg())) {
                     return ipLookup;
                 }
