@@ -3,95 +3,77 @@ package com.myapps.iplookup.service;
 import com.myapps.iplookup.util.IpInfo;
 import com.myapps.iplookup.util.StringUtil;
 
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 public class WhatIsMyIPAddressService extends IPService {
-	public WhatIsMyIPAddressService() {
-		this.url = "http://whatismyipaddress.com/ip/";
-		setPriority(4);
-		System.out.println("open connection to :" + this.url);
-	}
 
-	public WhatIsMyIPAddressService(DefaultHttpClient httpclient) {
-		this();
-		this.httpClient = httpclient;
-	}
+    public WhatIsMyIPAddressService(DefaultHttpClient httpClient) {
+        super(httpClient);
+        this.baseUrl = "http://whatismyipaddress.com/ip/";
+        this.priority = 1;
+    }
 
-	@Override
-	public IpInfo getIpValue(String ip) {
-		String finalURL = url + ip;
-		System.out.println("final url = " + finalURL);
-		IpInfo ipLookup = new IpInfo();
+    @Override
+    public IpInfo getIpValue(String ip) {
+        logger.info("Calling : " + this.toString() + ", IP: " + ip);
+        IpInfo ipInfo = new IpInfo();
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(getInputStream(ip)));
 
-		HttpEntity entity = null;
-		BufferedReader in = null;
-		try {
-			entity = getContents(httpClient, new URL(finalURL));
-			in = new BufferedReader(new InputStreamReader(entity.getContent()));
+            String inputLine = null;
+            int count = 0;
+            while ((inputLine = in.readLine()) != null && count != 3) {
+                if (inputLine.contains("Country")) {
+                    String value = getValueFromLine(inputLine);
+                    if (!StringUtil.isNullSpacesEmptyOrNA(value)) {
+                        ipInfo.setCountry(value);
+                        count++;
+                    } else {
+                        count = 0;
+                        break;
+                    }
+                }
+                if (inputLine.contains("Region")) {
+                    String value = getValueFromLine(inputLine);
+                    if (!StringUtil.isNullSpacesEmptyOrNA(value)) {
+                        ipInfo.setRegion(value);
+                        count++;
+                    }
+                }
+                if (inputLine.contains("City")) {
+                    String value = getValueFromLine(inputLine);
+                    if (!StringUtil.isNullSpacesEmptyOrNA(value)) {
+                        ipInfo.setCity(value);
+                        count++;
+                    }
+                }
+            }
 
-			String inputLine = null;
-			int count = 0;
-			while ((inputLine = in.readLine()) != null && count != 3) {
-				if (inputLine.contains("Country")) {
-					String value = getValueFromLine(inputLine);
-					if (!StringUtil.isNullSpacesEmptyOrNA(value)) {
-						ipLookup.setCountry(value);
-						count++;
-					} else {
-						count = 0;
-						break;
-					}
+            if (count == 0) {
+                ipInfo.setErrorMsg("Cannot get country info for " + baseUrl + ip);
+            }
+        } catch (Exception e) {
+            ipInfo.setErrorMsg(e.getMessage() + " baseUrl :" + baseUrl + ip);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (in != null)
+                    in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return ipInfo;
+    }
 
-				}
-				if (inputLine.contains("Region")) {
-					String value = getValueFromLine(inputLine);
-					if (!StringUtil.isNullSpacesEmptyOrNA(value)) {
-						ipLookup.setRegion(value);
-						count++;
-					}
-				}
-				if (inputLine.contains("City")) {
-					String value = getValueFromLine(inputLine);
-					if (!StringUtil.isNullSpacesEmptyOrNA(value)) {
-						ipLookup.setCity(value);
-						count++;
-					}
-
-				}
-			}
-
-			if (count == 0) {
-				ipLookup.setErrorMsg("Cannot get country info for " + finalURL);
-				// return new ArrayList<String>();
-			}
-			System.out.println("url 2 " + ipLookup.toString());
-		} catch (Exception e) {
-			ipLookup.setErrorMsg(e.getMessage() + " url :" + finalURL);
-			e.printStackTrace();
-		} finally {
-			try {
-				if (in != null)
-					in.close();
-				if (entity != null)
-					EntityUtils.consume(entity);
-			} catch (IOException e) {
-
-			}
-		}
-		return ipLookup;
-	}
-
-	private String getValueFromLine(String inputLine) throws IOException {
-		inputLine = inputLine.replaceAll("\\<.*?>", "");
-		String[] ret = inputLine.split(":");
-		return _unescapeHTML(ret[1].trim());
-	}
-
+    private String getValueFromLine(String inputLine) throws IOException {
+        inputLine = inputLine.replaceAll("\\<.*?>", "");
+        String[] ret = inputLine.split(":");
+        return unescapeHTML(ret[1].trim());
+    }
 }

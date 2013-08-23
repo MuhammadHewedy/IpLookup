@@ -6,6 +6,7 @@ import com.myapps.iplookup.service.IPInfoDBService;
 import com.myapps.iplookup.service.WebyieldService;
 import com.myapps.iplookup.service.WhatIsMyIPAddressService;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -32,6 +33,8 @@ public class IpLookupHelper {
         superIPLookUpsList.add(new GeoBytesService(httpClient));
         superIPLookUpsList.add(new WhatIsMyIPAddressService(httpClient));
 
+        Collections.sort(superIPLookUpsList);
+
         return getIpValue(ipAddress, superIPLookUpsList);
     }
 
@@ -40,8 +43,6 @@ public class IpLookupHelper {
         IpInfo ipLookup = new IpInfo();
         try {
             for (int i = 0; i < superIPLookUps.size(); i++) {
-                logger.info("calling service: "
-                        + superIPLookUps.get(i).getClass().getSimpleName());
                 ipLookup = superIPLookUps.get(i).getIpValue(ip);
                 if (StringUtil.isNullSpacesOrEmpty(ipLookup.getErrorMsg())) {
                     return ipLookup;
