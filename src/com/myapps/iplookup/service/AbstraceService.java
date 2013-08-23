@@ -12,16 +12,16 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.logging.Logger;
 
-public abstract class IPService implements Comparable<IPService> {
+public abstract class AbstraceService implements Comparable<AbstraceService> {
 
-    protected static final Logger logger = Logger.getLogger(IPService.class.getSimpleName());
+    protected static final Logger logger = Logger.getLogger(AbstraceService.class.getSimpleName());
     protected static int LOWEST_PRIORITY = Integer.MAX_VALUE;
 
     protected String baseUrl;
     protected DefaultHttpClient httpClient;
     protected int priority = LOWEST_PRIORITY;
 
-    public IPService(DefaultHttpClient httpClient) {
+    public AbstraceService(DefaultHttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
@@ -53,13 +53,13 @@ public abstract class IPService implements Comparable<IPService> {
     }
 
     @Override
-    public int compareTo(IPService ipService) {
+    public int compareTo(AbstraceService ipService) {
         return new Integer(this.priority).compareTo(ipService.priority);
     }
 
     @Override
     public String toString() {
-        return "IPService [baseUrl=" + baseUrl + "]" + ", priority= ["
+        return "AbstraceService [baseUrl=" + baseUrl + "]" + ", priority= ["
                 + this.priority + "]";
     }
 }

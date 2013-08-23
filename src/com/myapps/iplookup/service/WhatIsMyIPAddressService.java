@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class WhatIsMyIPAddressService extends IPService {
+public class WhatIsMyIPAddressService extends AbstraceService {
 
     public WhatIsMyIPAddressService(DefaultHttpClient httpClient) {
         super(httpClient);
