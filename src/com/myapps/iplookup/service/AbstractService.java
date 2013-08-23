@@ -10,6 +10,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 import java.util.logging.Logger;
 
 public abstract class AbstractService implements Comparable<AbstractService> {
@@ -21,8 +22,9 @@ public abstract class AbstractService implements Comparable<AbstractService> {
     protected DefaultHttpClient httpClient;
     protected int priority = LOWEST_PRIORITY;
 
-    public AbstractService(DefaultHttpClient httpClient) {
+    public AbstractService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
         this.httpClient = httpClient;
+        registerList.add(this);
     }
 
     public abstract IpInfo getIpValue(String ip);

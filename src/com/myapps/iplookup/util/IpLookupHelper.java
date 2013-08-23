@@ -15,33 +15,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 public class IpLookupHelper {
 
-    private static Logger logger = Logger.getLogger(IpLookupHelper.class
-            .getSimpleName());
-
-    /**
-     * @param ipAddress
-     * @param httpClient reusable http client instance, usually instantiated using:
-     *                   {@code new org.apache.http.impl.client.DefaultHttpClient()}
-     *                   note, you should manage it on your own.
-     * @return
-     */
-    public static IpInfo getIpInfo(final String ipAddress,
-                                   DefaultHttpClient httpClient) {
-        List<AbstractService> superIPLookUpsList = new LinkedList<AbstractService>();
-        superIPLookUpsList.add(new IPInfoDBService(httpClient));
-        superIPLookUpsList.add(new WebyieldService(httpClient));
-        superIPLookUpsList.add(new GeoBytesService(httpClient));
-        superIPLookUpsList.add(new WhatIsMyIPAddressService(httpClient));
-        Collections.sort(superIPLookUpsList);
-        return getIpValue(ipAddress, superIPLookUpsList);
-    }
-
-    private static IpInfo getIpValue(String ip,
-                                     List<AbstractService> ipLookUps) {
+    public static IpInfo getIpInfo(final String ipAddress) {
         IpInfo ipLookup = new IpInfo();
         try {
-            for (int i = 0; i < ipLookUps.size(); i++) {
-                ipLookup = ipLookUps.get(i).getIpValue(ip);
+            for (int i = 0; i < serviceList.size(); i++) {
+                ipLookup = serviceList.get(i).getIpValue(ipAddress);
                 if (StringUtil.isNullSpacesOrEmpty(ipLookup.getErrorMsg())) {
                     return ipLookup;
                 }
@@ -50,6 +28,16 @@ public class IpLookupHelper {
             e.printStackTrace();
         }
         return ipLookup;
+    }
+
+    private static List<AbstractService> serviceList = new LinkedList<AbstractService>();
+    static {
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        new IPInfoDBService(httpClient, serviceList);
+        new WebyieldService(httpClient, serviceList);
+        new GeoBytesService(httpClient, serviceList);
+        new WhatIsMyIPAddressService(httpClient, serviceList);
+        Collections.sort(serviceList);
     }
 
 }

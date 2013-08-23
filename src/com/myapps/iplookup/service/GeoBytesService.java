@@ -11,11 +11,12 @@ import org.jsoup.select.Elements;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class GeoBytesService extends AbstractService {
 
-    public GeoBytesService(DefaultHttpClient httpClient) {
-        super(httpClient);
+    public GeoBytesService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
+        super(httpClient, registerList);
         this.baseUrl = "http://www.geobytes.com/IpLocator.htm?GetLocation&IpAddress=";
         this.priority = 3;
     }

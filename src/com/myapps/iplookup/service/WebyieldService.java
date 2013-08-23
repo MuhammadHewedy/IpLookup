@@ -8,11 +8,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class WebyieldService extends AbstractService {
 
-    public WebyieldService(DefaultHttpClient httpClient) {
-        super(httpClient);
+    public WebyieldService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
+        super(httpClient, registerList);
         this.baseUrl = "http://www.webyield.net/ip/index.php?ip=";
         this.priority = 2;
     }

@@ -8,11 +8,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class WhatIsMyIPAddressService extends AbstractService {
 
-    public WhatIsMyIPAddressService(DefaultHttpClient httpClient) {
-        super(httpClient);
+    public WhatIsMyIPAddressService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
+        super(httpClient, registerList);
         this.baseUrl = "http://whatismyipaddress.com/ip/";
         this.priority = 1;
     }

@@ -12,14 +12,11 @@ public class Test {
 
     public static void main(String[] args) {
 
-        DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-
-        IpInfo ipInfo = IpLookupHelper.getIpInfo("123", defaultHttpClient);
+        IpInfo ipInfo = IpLookupHelper.getIpInfo("123");
         System.out.println("Country: " + ipInfo.getCountry());
 
-//        ipInfo = IpLookupHelper.getIpInfo("129.65.35.25", defaultHttpClient);
-//        System.out.println("Country: " + ipInfo.getCountry());
+        ipInfo = IpLookupHelper.getIpInfo("129.65.35.25");
+        System.out.println("Country: " + ipInfo.getCountry());
 
-        defaultHttpClient.getConnectionManager().shutdown();
     }
 }
