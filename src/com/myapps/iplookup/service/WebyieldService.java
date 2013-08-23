@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class WebyieldService extends AbstraceService {
+public class WebyieldService extends AbstractService {
 
     public WebyieldService(DefaultHttpClient httpClient) {
         super(httpClient);

@@ -1,7 +1,7 @@
 package com.myapps.iplookup.util;
 
+import com.myapps.iplookup.service.AbstractService;
 import com.myapps.iplookup.service.GeoBytesService;
-import com.myapps.iplookup.service.AbstraceService;
 import com.myapps.iplookup.service.IPInfoDBService;
 import com.myapps.iplookup.service.WebyieldService;
 import com.myapps.iplookup.service.WhatIsMyIPAddressService;
@@ -27,7 +27,7 @@ public class IpLookupHelper {
      */
     public static IpInfo getIpInfo(final String ipAddress,
                                    DefaultHttpClient httpClient) {
-        List<AbstraceService> superIPLookUpsList = new LinkedList<AbstraceService>();
+        List<AbstractService> superIPLookUpsList = new LinkedList<AbstractService>();
         superIPLookUpsList.add(new IPInfoDBService(httpClient));
         superIPLookUpsList.add(new WebyieldService(httpClient));
         superIPLookUpsList.add(new GeoBytesService(httpClient));
@@ -39,7 +39,7 @@ public class IpLookupHelper {
     }
 
     private static IpInfo getIpValue(String ip,
-                                     List<AbstraceService> superIPLookUps) {
+                                     List<AbstractService> superIPLookUps) {
         IpInfo ipLookup = new IpInfo();
         try {
             for (int i = 0; i < superIPLookUps.size(); i++) {

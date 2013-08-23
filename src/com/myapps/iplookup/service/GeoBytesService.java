@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class GeoBytesService extends AbstraceService {
+public class GeoBytesService extends AbstractService {
 
     public GeoBytesService(DefaultHttpClient httpClient) {
         super(httpClient);

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-public class IPInfoDBService extends AbstraceService {
+public class IPInfoDBService extends AbstractService {
 
     public IPInfoDBService(DefaultHttpClient httpClient) {
         super(httpClient);
