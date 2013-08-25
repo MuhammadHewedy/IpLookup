@@ -1,6 +1,7 @@
 package com.myapps.iplookup.service;
 
 import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.PriorityManager;
 import com.myapps.iplookup.util.StringUtil;
 
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -15,7 +16,6 @@ public class WhatIsMyIPAddressService extends AbstractService {
     public WhatIsMyIPAddressService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
         super(httpClient, registerList);
         this.baseUrl = "http://whatismyipaddress.com/ip/";
-        this.priority = 1;
     }
 
     @Override
@@ -58,6 +58,7 @@ public class WhatIsMyIPAddressService extends AbstractService {
             if (count == 0) {
                 ipInfo.setErrorMsg("Cannot get country info for " + baseUrl + ip);
                 logger.severe(this + " " + msg);
+                PriorityManager.getInstance().registerServiceError(this.getClass().getSimpleName());
             }
         } catch (Exception e) {
             ipInfo.setErrorMsg(e.getMessage() + " baseUrl :" + baseUrl + ip);
@@ -70,6 +71,7 @@ public class WhatIsMyIPAddressService extends AbstractService {
                 e.printStackTrace();
             }
         }
+        updatePriority();
         return ipInfo;
     }
 

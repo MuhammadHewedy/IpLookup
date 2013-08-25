@@ -1,6 +1,7 @@
 package com.myapps.iplookup.service;
 
 import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.PriorityManager;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,18 +17,25 @@ import java.util.logging.Logger;
 public abstract class AbstractService implements Comparable<AbstractService> {
 
     protected static final Logger logger = Logger.getLogger(AbstractService.class.getSimpleName());
-    protected static int LOWEST_PRIORITY = Integer.MAX_VALUE;
 
     protected String baseUrl;
     protected DefaultHttpClient httpClient;
-    protected int priority = LOWEST_PRIORITY;
+    protected int priority;
 
     public AbstractService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
         this.httpClient = httpClient;
         registerList.add(this);
+        this.priority = PriorityManager.getInstance().getPriority(this.getClass().getSimpleName());
     }
 
     public abstract IpInfo getIpValue(String ip);
+
+    /**
+     * Should call before return from @{link #getIpValue}
+     */
+    protected void updatePriority(){
+        this.priority = PriorityManager.getInstance().getPriority(this.getClass().getSimpleName());
+    }
 
     protected InputStream getInputStream(String ipAddress)
             throws IOException {

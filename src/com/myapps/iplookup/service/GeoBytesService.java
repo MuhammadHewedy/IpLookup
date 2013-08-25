@@ -1,6 +1,7 @@
 package com.myapps.iplookup.service;
 
 import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.PriorityManager;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.jsoup.Jsoup;
@@ -18,7 +19,6 @@ public class GeoBytesService extends AbstractService {
     public GeoBytesService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
         super(httpClient, registerList);
         this.baseUrl = "http://www.geobytes.com/IpLocator.htm?GetLocation&IpAddress=";
-        this.priority = 3;
     }
 
     @Override
@@ -49,6 +49,7 @@ public class GeoBytesService extends AbstractService {
             }
         }
 
+        updatePriority();
         return ipLookup;
     }
 
@@ -85,6 +86,7 @@ public class GeoBytesService extends AbstractService {
         if (count == 0) {
             ipLookup.setErrorMsg("Cannot get country info for " + baseUrl);
             logger.severe(this.toString() + " " + Html);
+            PriorityManager.getInstance().registerServiceError(this.getClass().getSimpleName());
         }
         return ipLookup;
     }

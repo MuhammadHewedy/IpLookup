@@ -18,7 +18,7 @@ public class Test {
     }
 
     public static void printInfo(int i){
-        IpInfo ipInfo = IpLookupHelper.getIpInfo("129.65.35." + i);
+        IpInfo ipInfo = IpLookupHelper.getIpInfo("100.65.35." + i);
 
         String errorMsg = ipInfo.getErrorMsg();
 

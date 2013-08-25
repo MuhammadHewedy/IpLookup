@@ -1,6 +1,7 @@
 package com.myapps.iplookup.service;
 
 import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.PriorityManager;
 import com.myapps.iplookup.util.StringUtil;
 
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -8,8 +9,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,7 +19,6 @@ public class IPInfoDBService extends AbstractService {
     public IPInfoDBService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
         super(httpClient, registerList);
         this.baseUrl = "http://api.ipinfodb.com/v3/ip-country/?key=57dd7876cf42d1c9dc07574764cd29969b8ea3929f3ac38bef0f7fae330acbb9&format=json&ip=";
-        this.priority = 4;
     }
 
     @Override
@@ -67,9 +65,11 @@ public class IPInfoDBService extends AbstractService {
             }
 
             if (count == 0){
+                PriorityManager.getInstance().registerServiceError(this.getClass().getSimpleName());
                 ipLookup.setErrorMsg("Cannot get country info for " + baseUrl + ip);
                 logger.severe(this.toString() + " " +
-                        new String(IOUtils.readFully(in, in.available(), true), "UTF-8"));
+                        new String(IOUtils.readFully(in, 1000, true), "UTF-8"));
+
             }
         } catch (Exception e) {
             ipLookup.setErrorMsg(e.getMessage() + " baseUrl :" + baseUrl + ip);
@@ -83,6 +83,7 @@ public class IPInfoDBService extends AbstractService {
             }
         }
 
+        updatePriority();
         return ipLookup;
     }
 }

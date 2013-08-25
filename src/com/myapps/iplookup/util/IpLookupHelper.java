@@ -17,6 +17,7 @@ public class IpLookupHelper {
 
     public static IpInfo getIpInfo(final String ipAddress) {
         IpInfo ipLookup = new IpInfo();
+        sortServicesByPriority();
         try {
             for (int i = 0; i < serviceList.size(); i++) {
                 ipLookup = serviceList.get(i).getIpValue(ipAddress);
@@ -30,6 +31,10 @@ public class IpLookupHelper {
         return ipLookup;
     }
 
+    private static void sortServicesByPriority() {
+        Collections.sort(serviceList);
+    }
+
     private static List<AbstractService> serviceList = new LinkedList<AbstractService>();
     static {
         DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager());
@@ -37,7 +42,6 @@ public class IpLookupHelper {
         new WebyieldService(httpClient, serviceList);
         new GeoBytesService(httpClient, serviceList);
         new WhatIsMyIPAddressService(httpClient, serviceList);
-        Collections.sort(serviceList);
     }
 
 }
