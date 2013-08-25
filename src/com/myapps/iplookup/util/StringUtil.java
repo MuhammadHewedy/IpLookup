@@ -78,14 +78,4 @@ public class StringUtil {
 	public static String getNanPartnum(String str) {
 		return removeSpecialCharacters(str, new char[] { '#', '.', '+' });
 	}
-
-	/*
-	 * test
-	 */
-	public static void main(String[] args) {
-		String out = removeSpecialCharacters("@##$!2....3#!$#!@$SADF##..#ADSF",
-				new char[] { '#', '.' });
-		System.out.println(out.length());
-		System.out.println(out);
-	}
 }

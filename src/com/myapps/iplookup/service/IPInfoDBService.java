@@ -33,7 +33,6 @@ public class IPInfoDBService extends AbstractService {
             for (String s : jsonIPDTO.keySet()) {
                 if (s.equalsIgnoreCase("countryName")) {
                     String value = jsonIPDTO.get(s);
-                    System.out.println("country = " + value);
                     if (!StringUtil.isNullSpacesEmptyOrNA(value)
                             && !value.equals("-")) {
                         ipLookup.setCountry(value);
@@ -45,7 +44,6 @@ public class IPInfoDBService extends AbstractService {
                 }
                 if (s.equalsIgnoreCase("regionName")) {
                     String value = jsonIPDTO.get(s);
-                    System.out.println(" region  =" + value);
                     if (!StringUtil.isNullSpacesOrEmpty(value)
                             && !"-".equalsIgnoreCase(value)) {
                         ipLookup.setRegion(value);
@@ -55,7 +53,6 @@ public class IPInfoDBService extends AbstractService {
                 }
                 if (s.equalsIgnoreCase("cityName")) {
                     String value = jsonIPDTO.get(s);
-                    System.out.println("city = " + value);
                     if (!StringUtil.isNullSpacesOrEmpty(value)
                             && !"-".equalsIgnoreCase(value)) {
                         ipLookup.setCity(value);
