@@ -58,6 +58,7 @@ public class WebyieldService extends AbstractService {
 
             if (count == 0) {
                 ipLookup.setErrorMsg("Cannot get country info for " + baseUrl + ip);
+                logger.severe(this.toString() + " " + inputLine);
             }
 
         } catch (Exception e) {

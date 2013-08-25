@@ -12,16 +12,8 @@ public class Test {
 
     public static void main(String[] args) {
 
-        for (int i = 0; i <= 255; i++) {
-            final int aii = i;
-            Thread thd = new Thread(){
-                @Override
-                public void run() {
-                    printInfo(aii);
-                }
-            };
-            thd.start();
-
+        for (int i = 0; i <= 0; i++) {
+            printInfo(i);
         }
     }
 

@@ -25,10 +25,10 @@ public class WhatIsMyIPAddressService extends AbstractService {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new InputStreamReader(getInputStream(ip)));
-
-            String inputLine = null;
+            String inputLine, msg = "";
             int count = 0;
             while ((inputLine = in.readLine()) != null && count != 3) {
+                msg += inputLine;
                 if (inputLine.contains("Country")) {
                     String value = getValueFromLine(inputLine);
                     if (!StringUtil.isNullSpacesEmptyOrNA(value)) {
@@ -57,6 +57,7 @@ public class WhatIsMyIPAddressService extends AbstractService {
 
             if (count == 0) {
                 ipInfo.setErrorMsg("Cannot get country info for " + baseUrl + ip);
+                logger.severe(this + " " + msg);
             }
         } catch (Exception e) {
             ipInfo.setErrorMsg(e.getMessage() + " baseUrl :" + baseUrl + ip);

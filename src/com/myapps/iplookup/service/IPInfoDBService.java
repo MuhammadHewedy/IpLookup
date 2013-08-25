@@ -8,8 +8,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
+
+import sun.misc.IOUtils;
 
 public class IPInfoDBService extends AbstractService {
 
@@ -62,8 +66,11 @@ public class IPInfoDBService extends AbstractService {
                 }
             }
 
-            if (count == 0)
+            if (count == 0){
                 ipLookup.setErrorMsg("Cannot get country info for " + baseUrl + ip);
+                logger.severe(this.toString() + " " +
+                        new String(IOUtils.readFully(in, in.available(), true), "UTF-8"));
+            }
         } catch (Exception e) {
             ipLookup.setErrorMsg(e.getMessage() + " baseUrl :" + baseUrl + ip);
             e.printStackTrace();

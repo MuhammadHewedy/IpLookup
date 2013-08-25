@@ -84,6 +84,7 @@ public class GeoBytesService extends AbstractService {
         }
         if (count == 0) {
             ipLookup.setErrorMsg("Cannot get country info for " + baseUrl);
+            logger.severe(this.toString() + " " + Html);
         }
         return ipLookup;
     }
