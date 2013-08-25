@@ -9,9 +9,9 @@ import com.myapps.iplookup.service.WhatIsMyIPAddressService;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 
 public class IpLookupHelper {
 
@@ -32,7 +32,7 @@ public class IpLookupHelper {
 
     private static List<AbstractService> serviceList = new LinkedList<AbstractService>();
     static {
-        DefaultHttpClient httpClient = new DefaultHttpClient();
+        DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager());
         new IPInfoDBService(httpClient, serviceList);
         new WebyieldService(httpClient, serviceList);
         new GeoBytesService(httpClient, serviceList);

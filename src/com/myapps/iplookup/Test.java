@@ -12,11 +12,29 @@ public class Test {
 
     public static void main(String[] args) {
 
-        IpInfo ipInfo = IpLookupHelper.getIpInfo("123");
-        System.out.println("Country: " + ipInfo.getCountry());
+        for (int i = 0; i <= 255; i++) {
+            final int aii = i;
+            Thread thd = new Thread(){
+                @Override
+                public void run() {
+                    printInfo(aii);
+                }
+            };
+            thd.start();
 
-        ipInfo = IpLookupHelper.getIpInfo("129.65.35.25");
-        System.out.println("Country: " + ipInfo.getCountry());
+        }
+    }
 
+    public static void printInfo(int i){
+        IpInfo ipInfo = IpLookupHelper.getIpInfo("129.65.35." + i);
+
+        String errorMsg = ipInfo.getErrorMsg();
+
+        if (errorMsg != null) {
+            System.out.println("Error: " + errorMsg);
+        } else {
+            System.out.println("Country: " + ipInfo.getCountry() + ", " + ipInfo.getCity() +
+                    ", " + ipInfo.getRegion());
+        }
     }
 }
