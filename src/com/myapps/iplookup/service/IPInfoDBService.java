@@ -18,7 +18,7 @@ public class IPInfoDBService extends AbstractService {
 
     public IPInfoDBService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
         super(httpClient, registerList);
-        this.baseUrl = "http://api.ipinfodb.com/v3/ip-country/?key=57dd7876cf42d1c9dc07574764cd29969b8ea3929f3ac38bef0f7fae330acbb9&format=json&ip=";
+        this.baseUrl = "http://api.ipinfodb.com/v3/ip-city/?key=57dd7876cf42d1c9dc07574764cd29969b8ea3929f3ac38bef0f7fae330acbb9&format=json&ip=";
     }
 
     @Override

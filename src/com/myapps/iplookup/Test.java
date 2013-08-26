@@ -12,13 +12,13 @@ public class Test {
 
     public static void main(String[] args) {
 
-        for (int i = 0; i <= 0; i++) {
+        for (int i = 100; i <= 150; i++) {
             printInfo(i);
         }
     }
 
     public static void printInfo(int i){
-        IpInfo ipInfo = IpLookupHelper.getIpInfo("100.65.35." + i);
+        IpInfo ipInfo = IpLookupHelper.getIpInfo("80." + i + ".35." + i);
 
         String errorMsg = ipInfo.getErrorMsg();
 

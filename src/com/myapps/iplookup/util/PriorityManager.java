@@ -25,13 +25,11 @@ public class PriorityManager {
 
     public int getPriority(String serviceName){
         String p = properties.getProperty(serviceName, "0");
-        System.out.println("s : " + serviceName + ", p: " + p);
         return Integer.parseInt(p);
     }
 
     public void registerServiceError(String serviceName){
-        String p = properties.getProperty(serviceName, "0");
-        String v = String.valueOf((Integer.parseInt(p) + 1));
+        String v = String.valueOf(getPriority(serviceName) + 1);
         properties.setProperty(serviceName, v);
 
         try {

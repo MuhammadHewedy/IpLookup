@@ -69,7 +69,7 @@ public abstract class AbstractService implements Comparable<AbstractService> {
 
     @Override
     public String toString() {
-        return "AbstractService [baseUrl=" + baseUrl + "]" + ", priority= ["
+        return this.getClass().getSimpleName() +  ", priority= ["
                 + this.priority + "]";
     }
 }
