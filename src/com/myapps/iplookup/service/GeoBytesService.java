@@ -40,7 +40,8 @@ public class GeoBytesService extends AbstractService {
             ipLookup = jsoupParser(finalInputLine);
         } catch (Exception e) {
             ipLookup.setErrorMsg(e.getMessage() + " baseUrl :" + baseUrl + ip);
-            e.printStackTrace();
+            logger.severe(e.getMessage());
+            PriorityManager.getInstance().registerServiceError(this.getClass().getSimpleName());
         } finally {
             try {
                 if (in != null)

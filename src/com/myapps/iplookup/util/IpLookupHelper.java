@@ -9,6 +9,8 @@ import com.myapps.iplookup.service.WhatIsMyIPAddressService;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
@@ -17,16 +19,21 @@ public class IpLookupHelper {
 
     public static IpInfo getIpInfo(final String ipAddress) {
         IpInfo ipLookup = new IpInfo();
-        sortServicesByPriority();
-        try {
-            for (int i = 0; i < serviceList.size(); i++) {
-                ipLookup = serviceList.get(i).getIpValue(ipAddress);
-                if (StringUtil.isNullSpacesOrEmpty(ipLookup.getErrorMsg())) {
-                    return ipLookup;
+
+        if (!IPAddressValidator.getInstance().validate(ipAddress)){
+            ipLookup.setErrorMsg("Invalid IP Address");
+        }else{
+            sortServicesByPriority();
+            try {
+                for (int i = 0; i < serviceList.size(); i++) {
+                    ipLookup = serviceList.get(i).getIpValue(ipAddress);
+                    if (StringUtil.isNullSpacesOrEmpty(ipLookup.getErrorMsg())) {
+                        return ipLookup;
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return ipLookup;
     }

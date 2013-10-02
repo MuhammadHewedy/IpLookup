@@ -12,7 +12,7 @@ import java.util.Properties;
 public class PriorityManager {
 
     private static PriorityManager INSTANCE = new PriorityManager();
-    private static String FILE_PATH = System.getProperty("user.home") + "/iplookup.dat";
+    private static String FILE_PATH = System.getProperty("user.home") + "/.iplookup.dat";
 
     private static Properties properties = new Properties();
 

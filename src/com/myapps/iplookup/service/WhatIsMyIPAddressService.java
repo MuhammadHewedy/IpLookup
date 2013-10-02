@@ -62,7 +62,8 @@ public class WhatIsMyIPAddressService extends AbstractService {
             }
         } catch (Exception e) {
             ipInfo.setErrorMsg(e.getMessage() + " baseUrl :" + baseUrl + ip);
-            e.printStackTrace();
+            logger.severe(e.getMessage());
+            PriorityManager.getInstance().registerServiceError(this.getClass().getSimpleName());
         } finally {
             try {
                 if (in != null)

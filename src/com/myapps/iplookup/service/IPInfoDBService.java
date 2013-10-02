@@ -73,7 +73,8 @@ public class IPInfoDBService extends AbstractService {
             }
         } catch (Exception e) {
             ipLookup.setErrorMsg(e.getMessage() + " baseUrl :" + baseUrl + ip);
-            e.printStackTrace();
+            logger.severe(e.getMessage());
+            PriorityManager.getInstance().registerServiceError(this.getClass().getSimpleName());
         } finally {
             try {
                 if (in != null)
