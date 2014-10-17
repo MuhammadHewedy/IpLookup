@@ -1,19 +1,20 @@
 package com.myapps.iplookup.service;
 
-import com.myapps.iplookup.util.IpInfo;
-import com.myapps.iplookup.util.PriorityManager;
-import com.myapps.iplookup.util.StringUtil;
-
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.codehaus.jackson.map.ObjectMapper;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import sun.misc.IOUtils;
 
+import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.PriorityManager;
+import com.myapps.iplookup.util.StringUtil;
+
+@SuppressWarnings({ "deprecation", "restriction" })
 public class IPInfoDBService extends AbstractService {
 
     public IPInfoDBService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
@@ -30,7 +31,9 @@ public class IPInfoDBService extends AbstractService {
             int count = 0;
             ObjectMapper mapper = new ObjectMapper();
             in = getInputStream(ip);
-            HashMap<String, String> jsonIPDTO = mapper.readValue(in, HashMap.class);
+			@SuppressWarnings("unchecked")
+			HashMap<String, String> jsonIPDTO = mapper.readValue(in,
+					HashMap.class);
 
             for (String s : jsonIPDTO.keySet()) {
                 if (s.equalsIgnoreCase("countryName")) {

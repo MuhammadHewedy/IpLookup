@@ -1,20 +1,19 @@
 package com.myapps.iplookup.util;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+
 import com.myapps.iplookup.service.AbstractService;
 import com.myapps.iplookup.service.GeoBytesService;
 import com.myapps.iplookup.service.IPInfoDBService;
 import com.myapps.iplookup.service.WebyieldService;
 import com.myapps.iplookup.service.WhatIsMyIPAddressService;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-
+@SuppressWarnings("deprecation")
 public class IpLookupHelper {
 
     public static IpInfo getIpInfo(final String ipAddress) {
@@ -46,9 +45,9 @@ public class IpLookupHelper {
     static {
         DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager());
         new IPInfoDBService(httpClient, serviceList);
-        new WebyieldService(httpClient, serviceList);
-        new GeoBytesService(httpClient, serviceList);
-        new WhatIsMyIPAddressService(httpClient, serviceList);
+		new WebyieldService(httpClient, serviceList);
+		new GeoBytesService(httpClient, serviceList);
+		new WhatIsMyIPAddressService(httpClient, serviceList);
     }
 
 }

@@ -3,8 +3,6 @@ package com.myapps.iplookup;
 import com.myapps.iplookup.util.IpInfo;
 import com.myapps.iplookup.util.IpLookupHelper;
 
-import org.apache.http.impl.client.DefaultHttpClient;
-
 /**
  * Created by mohammad_abdullah on 8/1/13.
  */
@@ -15,7 +13,7 @@ public class Test {
 //        IpInfo ipInfo = IpLookupHelper.getIpInfo("bla bla bla");
 //        System.err.println(ipInfo.getErrorMsg());
 
-        for (int i = 100; i <= 150; i++) {
+		for (int i = 100; i <= 120; i++) {
             printInfo(i);
         }
     }

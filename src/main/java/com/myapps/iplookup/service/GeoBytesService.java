@@ -1,7 +1,9 @@
 package com.myapps.iplookup.service;
 
-import com.myapps.iplookup.util.IpInfo;
-import com.myapps.iplookup.util.PriorityManager;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.jsoup.Jsoup;
@@ -9,14 +11,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
+import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.PriorityManager;
 
+@SuppressWarnings("deprecation")
 public class GeoBytesService extends AbstractService {
 
-    public GeoBytesService(DefaultHttpClient httpClient, List<AbstractService> registerList) {
+	public GeoBytesService(DefaultHttpClient httpClient,
+			List<AbstractService> registerList) {
         super(httpClient, registerList);
         this.baseUrl = "http://www.geobytes.com/IpLocator.htm?GetLocation&IpAddress=";
     }

@@ -1,16 +1,17 @@
 package com.myapps.iplookup.service;
 
-import com.myapps.iplookup.util.IpInfo;
-import com.myapps.iplookup.util.PriorityManager;
-import com.myapps.iplookup.util.StringUtil;
-
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.PriorityManager;
+import com.myapps.iplookup.util.StringUtil;
+
+@SuppressWarnings("deprecation")
 public class WhatIsMyIPAddressService extends AbstractService {
 
     public WhatIsMyIPAddressService(DefaultHttpClient httpClient, List<AbstractService> registerList) {

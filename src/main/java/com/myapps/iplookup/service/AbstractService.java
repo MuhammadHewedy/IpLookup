@@ -1,19 +1,20 @@
 package com.myapps.iplookup.service;
 
-import com.myapps.iplookup.util.IpInfo;
-import com.myapps.iplookup.util.PriorityManager;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.myapps.iplookup.util.IpInfo;
+import com.myapps.iplookup.util.PriorityManager;
+
+@SuppressWarnings("deprecation")
 public abstract class AbstractService implements Comparable<AbstractService> {
 
     protected static final Logger logger = Logger.getLogger(AbstractService.class.getSimpleName());
@@ -41,7 +42,7 @@ public abstract class AbstractService implements Comparable<AbstractService> {
             throws IOException {
         URL url = new URL(baseUrl + ipAddress);
         HttpGet httpget = new HttpGet(url.toString());
-        appendHeaders(httpget, url);
+		appendHeaders(httpget, url);
         HttpResponse response = httpClient.execute(httpget);
         HttpEntity entity = response.getEntity();
         return entity.getContent();
@@ -62,7 +63,7 @@ public abstract class AbstractService implements Comparable<AbstractService> {
                 .replaceAll("&gt;", ">");
     }
 
-    @Override
+	@Override
     public int compareTo(AbstractService ipService) {
         return new Integer(this.priority).compareTo(ipService.priority);
     }
