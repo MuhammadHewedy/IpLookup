@@ -8,7 +8,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 
 import com.myapps.iplookup.service.AbstractService;
-import com.myapps.iplookup.service.GeoBytesService;
 import com.myapps.iplookup.service.IPInfoDBService;
 import com.myapps.iplookup.service.WebyieldService;
 import com.myapps.iplookup.service.WhatIsMyIPAddressService;
@@ -46,7 +45,7 @@ public class IpLookupHelper {
         DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager());
         new IPInfoDBService(httpClient, serviceList);
 		new WebyieldService(httpClient, serviceList);
-		new GeoBytesService(httpClient, serviceList);
+		// new GeoBytesService(httpClient, serviceList); // return invalid data
 		new WhatIsMyIPAddressService(httpClient, serviceList);
     }
 
